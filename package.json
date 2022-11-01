@@ -1,0 +1,31 @@
+{
+  "name": "frontend-project-46",
+  "version": "1.0.0",
+  "bin": {
+    "gendiff": "/gendiff.js"
+  },
+  "type": "module",
+  "description": "CLI finder of differencies in files (JSON, YAML)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/F1nsky/frontend-project-46.git"
+  },
+  "author": "F1nsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/F1nsky/frontend-project-46/issues"
+  },
+  "homepage": "https://github.com/F1nsky/frontend-project-46#readme",
+  "dependencies": {
+    "commander": "^9.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
