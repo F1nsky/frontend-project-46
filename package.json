@@ -22,7 +22,7 @@
   "homepage": "https://github.com/F1nsky/frontend-project-46#readme",
   "dependencies": {
     "commander": "^9.4.1",
-    "fs": "^0.0.1-security",
+    "fs": "^0.0.2",
     "lodash": "^4.17.21",
     "path": "^0.12.7"
   },
