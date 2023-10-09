@@ -1,7 +1,7 @@
 module.exports = {
   transform: {},
   transformIgnorePatterns: [],
-  extensionsToTreatAsEsm: ['.mjs'],
+  extensionsToTreatAsEsm: [],
   globals: {
     'ts-jest': {
       useESM: true,
