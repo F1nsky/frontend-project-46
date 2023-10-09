@@ -10,13 +10,6 @@ import path from 'path';
 import render from './formatters/index.js';
 import { parse } from './parsers.js';
 
-// diffTree
-export const buildDiffTree = (beforeConfig, afterConfig) => {
-  const fileKeys = union(keys(beforeConfig), keys(afterConfig));
-  const result = fileKeys.map((key) => buildNode(key, beforeConfig, afterConfig));
-  return result;
-};
-
 const buildNode = (key, beforeConfig, afterConfig) => {
   let modifiedNode;
   if (!has(afterConfig, key)) {
@@ -37,23 +30,25 @@ const buildNode = (key, beforeConfig, afterConfig) => {
   return modifiedNode;
 };
 
+export const buildDiffTree = (beforeConfig, afterConfig) => {
+  const fileKeys = union(keys(beforeConfig), keys(afterConfig));
+  const result = fileKeys.map((key) => buildNode(key, beforeConfig, afterConfig));
+  return result;
+};
+
 const makeFileData = (pathToFile) => {
   const data = fs.readFileSync(path.resolve(pathToFile), 'utf-8');
   const type = trim(path.extname(pathToFile), '.');
-
   return { data, type };
 };
 
 const genDiff = (pathToFile1, pathToFile2, format) => {
   const beforeConfig = makeFileData(pathToFile1);
   const afterConfig = makeFileData(pathToFile2);
-
   const parseBefore = parse(beforeConfig.type, beforeConfig.data);
   const parseAfter = parse(afterConfig.type, afterConfig.data);
-
   const diffTree = buildDiffTree(parseBefore, parseAfter);
   const result = render(diffTree, format);
-
   return result;
 };
 
