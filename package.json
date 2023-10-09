@@ -7,7 +7,7 @@
   "description": "CLI finder of differencies in files (JSON, YAML)",
   "main": "src/index.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "jest"
   },
   "engines": {
     "node": ">=14"
@@ -36,6 +36,7 @@
     "eslint": "^8.26.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "jest": "^29.3.1"
+    "esm": "^3.2.25",
+    "jest": "latest"
   }
 }
