@@ -2,27 +2,25 @@ import yaml from 'js-yaml';
 import ini from 'ini';
 import { isObject, isBoolean, keys } from 'lodash';
 
+const normalizeConfig = (config) => {
+  const configKeys = keys(config);
+  return configKeys.reduce((acc, key) => {
+    if (isObject(config[key])) {
+      return { ...acc, [key]: normalizeConfig(config[key]) };
+    }
+    if (isBoolean(config[key])) {
+      return { ...acc, [key]: config[key] };
+    }
+    if (Number.isNaN(Number(config[key]))) {
+      return { ...acc, [key]: config[key] };
+    }
+    return { ...acc, [key]: Number(config[key]) };
+  }, {});
+};
+
 const myIniParse = (data) => {
   const parseFile = ini.parse(data);
-
-  const normalize = (config) => {
-    const configKeys = keys(config);
-    const result = configKeys.reduce((acc, key) => {
-      if (isObject(config[key])) {
-        return { ...acc, [key]: normalize(config[key]) };
-      }
-      if (isBoolean(config[key])) {
-        return { ...acc, [key]: config[key] };
-      }
-      if (Number.isNaN(Number(config[key]))) {
-        return { ...acc, [key]: config[key] };
-      }
-      return { ...acc, [key]: Number(config[key]) };
-    }, {});
-    return result;
-  };
-
-  return normalize(parseFile);
+  return normalizeConfig(parseFile);
 };
 
 export const parse = (type, data) => {
@@ -30,7 +28,6 @@ export const parse = (type, data) => {
     case 'json':
       return JSON.parse(data);
     case 'yaml':
-      return yaml.safeLoad(data);
     case 'yml':
       return yaml.safeLoad(data);
     case 'ini':
