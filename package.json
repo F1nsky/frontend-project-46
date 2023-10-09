@@ -1,5 +1,5 @@
 {
-  "name": "gendiff-hr",
+  "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "second project by Hexlet",
   "main": "dist/index.js",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/khloptsevps/gendiff-hr.git"
+    "url": "https://github.com/F1nsky/frontend-project-46"
   },
   "keywords": [
     "khloptsev",
@@ -25,12 +25,12 @@
     "hangry_rabbit",
     "hr"
   ],
-  "author": "khlotsevps",
+  "author": "finsky",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/khloptsevps/gendiff-hr/issues"
+    "url": "https://github.com/F1nsky/frontend-project-46"
   },
-  "homepage": "https://github.com/khloptsevps/gendiff-hr#readme",
+  "homepage": "https://github.com/F1nsky/frontend-project-46",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
