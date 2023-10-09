@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import _ from 'lodash';
+const _ = require('lodash');
 import fs from 'fs';
 import path from 'path';
 
