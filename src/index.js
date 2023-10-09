@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
-const _ = require('lodash');
 import fs from 'fs';
-import path from 'path';
+const path = require('path');
+const _ = require('lodash');
 
 export default (path1, path2) => {
   const parsedFile1 = JSON.parse(fs.readFileSync(path.resolve(path1)));
