@@ -1,42 +1,62 @@
-/* eslint-disable no-restricted-syntax */
-const fs = require('fs');
-const path = require('path');
-const _ = require('lodash');
-const genDiff = require('../src/index.js');
+import {
+  has,
+  isObject,
+  union,
+  keys,
+  trim,
+} from 'lodash';
+import fs from 'fs';
+import path from 'path';
+import render from './formatters/index.js';
+import { parse } from './parsers.js';
 
-export default (path1, path2) => {
-  const parsedFile1 = JSON.parse(fs.readFileSync(path.resolve(path1)));
-  const parsedFile2 = JSON.parse(fs.readFileSync(path.resolve(path2)));
-  const compareObjects = (obj1, obj2) => {
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
-    const uniqKeys = _.union(keys1, keys2);
-    const sortedKeys = _.sortBy(uniqKeys);
-    const processedDiff = {};
-    for (const key of sortedKeys) {
-      if (key in obj1 && key in obj2) {
-        if (obj1[key] === obj2[key]) {
-          processedDiff[`  ${key}`] = obj1[key];
-        } else {
-          processedDiff[`- ${key}`] = obj1[key];
-          processedDiff[`+ ${key}`] = obj2[key];
-        }
-      }
-
-      if (key in obj1 === false && key in obj2) {
-        processedDiff[`+ ${key}`] = obj2[key];
-      }
-
-      if (key in obj1 && key in obj2 === false) {
-        processedDiff[`- ${key}`] = obj1[key];
-      }
+// diffTree
+export const buildDiffTree = (beforeConfig, afterConfig) => {
+  const fileKeys = union(keys(beforeConfig), keys(afterConfig));
+  const result = fileKeys.map((key) => {
+    if (!has(afterConfig, key)) {
+      return { key, status: 'deleted', value: beforeConfig[key] };
     }
-    return processedDiff;
-  };
-  const stringify = (obj) => {
-    const str = JSON.stringify(obj, null, ' ');
-    console.log(str.replaceAll('"', ''));
-  };
-  const rnd = compareObjects(parsedFile1, parsedFile2);
-  stringify(rnd);
+    if (!has(beforeConfig, key)) {
+      return { key, status: 'added', value: afterConfig[key] };
+    }
+    const oldValue = beforeConfig[key];
+    const newValue = afterConfig[key];
+    if (oldValue === newValue) {
+      return { key, status: 'unmodified', value: oldValue };
+    }
+    if (isObject(oldValue) && isObject(newValue)) {
+      return { key, status: 'merged', children: buildDiffTree(oldValue, newValue) };
+    }
+    const modifiedNode = {
+      key,
+      status: 'modified',
+      oldValue,
+      newValue,
+    };
+    return modifiedNode;
+  });
+  return result;
 };
+
+const makeFileData = (pathToFile) => {
+  const data = fs.readFileSync(path.resolve(pathToFile), 'utf-8');
+  const type = trim(path.extname(pathToFile), '.');
+
+  return { data, type };
+};
+
+const genDiff = (pathToFile1, pathToFile2, format) => {
+  const beforeConfig = makeFileData(pathToFile1);
+  const afterConfig = makeFileData(pathToFile2);
+
+  const parseBefore = parse(beforeConfig.type, beforeConfig.data);
+  const parseAfter = parse(afterConfig.type, afterConfig.data);
+
+  const diffTree = buildDiffTree(parseBefore, parseAfter);
+  const result = render(diffTree, format);
+
+  return result;
+};
+
+export default genDiff;
