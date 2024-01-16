@@ -1,1 +1,8 @@
-dist
+.github/
+node_modules/
+coverage/
+.vscode/
+.idea/
+*.log
+*.tmp
+config.js

@@ -1,5 +1,5 @@
 import plain from './plain.js';
-import stylish from './stylish.js';
+import treeFormatter from './treeFormatter.js';
 
 export default (tree, format) => {
   switch (format) {
@@ -8,6 +8,6 @@ export default (tree, format) => {
     case 'json':
       return JSON.stringify(tree);
     default:
-      return stylish(tree);
+      return treeFormatter(tree);
   }
 };

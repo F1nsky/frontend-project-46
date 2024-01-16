@@ -2,7 +2,6 @@ install:
 	npm install
 
 build:
-	rm -rf dist
 	npm run build
 
 publish:
@@ -17,4 +16,9 @@ test:
 test-coverage:
 	npm test -- --coverage
 
-.PHONY: test
+clean:
+	rm -rf node_modules
+	rm -rf dist
+	rm -rf coverage
+
+.PHONY: install build publish lint test test-coverage clean

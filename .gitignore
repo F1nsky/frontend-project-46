@@ -1,4 +1,28 @@
-/node_modules/
-dist
-coverage
+# Dependency directories
+node_modules/
+
+# Compiled binary addons (if any)
+/build/
+
+# Environment variables file
+.env
+
+# Coverage directory used by tools like Istanbul
+coverage/
+
+# Output of `npm run build`
+/dist/
+
+# Output of `npm run test` (if coverage is generated in the test output)
+/coverage/
+
+# Log files
+*.log
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# Operating System files
 .DS_Store
+Thumbs.db
