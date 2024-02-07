@@ -8,9 +8,26 @@
     "genDiff": "src/bin/genDiff.js"
   },
   "scripts": {
-    "test": "nyc --reporter=text-lcov jest --config jest.config.cjs && codeclimate-test-reporter < coverage/lcov.info",
+    "lint": "eslint .",
+    "test": "jest --config jest.config.cjs --coverage",
+    "coverage": "nyc --reporter=text-lcov jest npm run test",
     "build": "set NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build"
+  },
+  "nyc": {
+    "include": "src",
+    "exclude": "src/**/*.test.js",
+    "extension": [
+      ".js"
+    ],
+    "require": [
+      "@babel/register"
+    ],
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "sourceMap": true
   },
   "repository": {
     "type": "git",
