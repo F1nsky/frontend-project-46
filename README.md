@@ -43,7 +43,7 @@ To use the difference finder, follow these steps:
    ```
    gendiff path/to/file1.json path/to/file2.json --format json
    ```
-   ### Hexlet tasks screencasts
+   ## Hexlet tasks screencasts
 
    Task 4 asciinema: https://asciinema.org/a/JchjuoutF7HcX9POojX6f2YGD
 
