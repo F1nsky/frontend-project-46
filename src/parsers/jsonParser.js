@@ -1,3 +1,3 @@
-export const parseJson = (data) => {
-    return JSON.parse(data);
-  };
+const parseJson = (data) => JSON.parse(data);
+
+export default parseJson;

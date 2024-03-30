@@ -1,49 +1,47 @@
-import fs from "fs";
-import path from "path";
-import render from "./formatters/formatterIndex.js";
-import { parse } from "./parsers/parserIndex.js";
+import fs from 'fs';
+import path from 'path';
+import render from './formatters/formatterIndex.js';
+import parse from './parsers/parserIndex.js';
 
 export const buildDiffTree = (beforeConfig, afterConfig) => {
   const buildNode = (key, innerBeforeConfig, innerAfterConfig) => {
     let modifiedNode;
     if (!(key in innerAfterConfig)) {
-      modifiedNode = { key, status: "deleted", value: innerBeforeConfig[key] };
+      modifiedNode = { key, status: 'deleted', value: innerBeforeConfig[key] };
     } else if (!(key in innerBeforeConfig)) {
-      modifiedNode = { key, status: "added", value: innerAfterConfig[key] };
+      modifiedNode = { key, status: 'added', value: innerAfterConfig[key] };
     } else {
       const oldValue = innerBeforeConfig[key];
       const newValue = innerAfterConfig[key];
       if (oldValue === newValue) {
-        modifiedNode = { key, status: "unmodified", value: oldValue };
-      } else if (typeof oldValue === "object" && typeof newValue === "object") {
+        modifiedNode = { key, status: 'unmodified', value: oldValue };
+      } else if (typeof oldValue === 'object' && typeof newValue === 'object') {
         modifiedNode = {
           key,
-          status: "merged",
+          status: 'merged',
           children: buildDiffTree(oldValue, newValue),
         };
       } else {
         modifiedNode = {
           key,
-          status: "modified",
+          status: 'modified',
           oldValue,
           newValue,
         };
       }
     }
     return modifiedNode;
-  }
+  };
 
   const fileKeys = [
     ...new Set([...Object.keys(beforeConfig), ...Object.keys(afterConfig)]),
   ];
-  const result = fileKeys.map((key) =>
-    buildNode(key, beforeConfig, afterConfig)
-  );
+  const result = fileKeys.map((key) => buildNode(key, beforeConfig, afterConfig));
   return result;
 };
 
 const makeFileData = (pathToFile) => {
-  const data = fs.readFileSync(path.resolve(pathToFile), "utf-8");
+  const data = fs.readFileSync(path.resolve(pathToFile), 'utf-8');
   const type = path.extname(pathToFile).slice(1);
   return { data, type };
 };

@@ -1,13 +1,13 @@
-import path from "path";
-import fs from "fs";
-import genDiff from "../../src/index.js";
+import path from 'path';
+import fs from 'fs';
+import genDiff from '../../src/index.js';
 
-const extensions = ["json", "yml", "ini"];
+const extensions = ['json', 'yml', 'ini'];
 
-describe("genDiff", () => {
+describe('genDiff', () => {
   const recursiveResult = fs.readFileSync(
-    path.resolve(__dirname, "../__fixtures__/result.diff"),
-    "utf8"
+    path.resolve(__dirname, '../__fixtures__/result.diff'),
+    'utf8',
   );
 
   extensions.forEach((ext) => {

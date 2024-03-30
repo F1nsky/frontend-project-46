@@ -1,5 +1,5 @@
-import yaml from "js-yaml";
+import yaml from 'js-yaml';
 
-export const parseYaml = (data) => {
-  return yaml.safeLoad(data);
-};
+const parseYaml = (data) => yaml.safeLoad(data);
+
+export default parseYaml;
