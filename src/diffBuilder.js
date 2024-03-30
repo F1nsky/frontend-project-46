@@ -3,7 +3,7 @@ import path from 'path';
 import render from './formatters/formatterIndex.js';
 import parse from './parsers/parserIndex.js';
 
-export const buildDiffTree = (beforeConfig, afterConfig) => {
+const buildDiffTree = (beforeConfig, afterConfig) => {
   const buildNode = (key, innerBeforeConfig, innerAfterConfig) => {
     let modifiedNode;
     if (!(key in innerAfterConfig)) {
