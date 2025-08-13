@@ -19,4 +19,18 @@ describe('genDiff - Plain Output', () => {
       expect(expected).toEqual(plainResult);
     });
   });
+
+  test('handles numeric strings and null values', () => {
+    const before = path.resolve(
+      __dirname,
+      '../__fixtures__/plain-numeric-before.json',
+    );
+    const after = path.resolve(
+      __dirname,
+      '../__fixtures__/plain-numeric-after.json',
+    );
+    const expected = "Property 'numString' was changed from '1' to 1\n"
+      + "Property 'addedNull' was added with value: null";
+    expect(genDiff(before, after, 'plain')).toEqual(expected);
+  });
 });
