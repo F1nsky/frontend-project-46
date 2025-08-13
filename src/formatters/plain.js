@@ -1,8 +1,11 @@
 const checkValue = (value) => {
+  if (value === null) {
+    return 'null';
+  }
   if (typeof value === 'object') {
     return '[complex value]';
   }
-  if (Number.isNaN(Number(value))) {
+  if (typeof value === 'string') {
     return `'${value}'`;
   }
   return value;
